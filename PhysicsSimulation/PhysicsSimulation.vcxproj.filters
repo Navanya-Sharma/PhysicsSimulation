@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Core">
+      <UniqueIdentifier>{dccc2726-91ff-4098-8494-1a2ecd52d2de}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="glad.c">
+      <Filter>Core</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
