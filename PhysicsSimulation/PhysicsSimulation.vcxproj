@@ -133,7 +133,25 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="glad.c" />
+    <ClCompile Include="IMGui\imgui.cpp" />
+    <ClCompile Include="IMGui\imgui_demo.cpp" />
+    <ClCompile Include="IMGui\imgui_draw.cpp" />
+    <ClCompile Include="IMGui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="IMGui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="IMGui\imgui_tables.cpp" />
+    <ClCompile Include="IMGui\imgui_widgets.cpp" />
     <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="IMGui\imconfig.h" />
+    <ClInclude Include="IMGui\imgui.h" />
+    <ClInclude Include="IMGui\imgui_impl_glfw.h" />
+    <ClInclude Include="IMGui\imgui_impl_opengl3.h" />
+    <ClInclude Include="IMGui\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="IMGui\imgui_internal.h" />
+    <ClInclude Include="IMGui\imstb_rectpack.h" />
+    <ClInclude Include="IMGui\imstb_textedit.h" />
+    <ClInclude Include="IMGui\imstb_truetype.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
