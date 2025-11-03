@@ -132,6 +132,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Base.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="IMGui\imgui.cpp" />
     <ClCompile Include="IMGui\imgui_demo.cpp" />
@@ -141,8 +142,10 @@
     <ClCompile Include="IMGui\imgui_tables.cpp" />
     <ClCompile Include="IMGui\imgui_widgets.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Scene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Base.h" />
     <ClInclude Include="IMGui\imconfig.h" />
     <ClInclude Include="IMGui\imgui.h" />
     <ClInclude Include="IMGui\imgui_impl_glfw.h" />
@@ -152,6 +155,8 @@
     <ClInclude Include="IMGui\imstb_rectpack.h" />
     <ClInclude Include="IMGui\imstb_textedit.h" />
     <ClInclude Include="IMGui\imstb_truetype.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

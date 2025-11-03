@@ -2,22 +2,29 @@
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 
-#include "glm/glm.hpp"
-#include "stb_image.h"
+/*#include "glm/glm.hpp"
+#include "stb_image.h"*/
 
 #include "ImGui\imgui.h"
 #include "ImGui\imgui_impl_glfw.h"
 #include "ImGui\imgui_impl_opengl3.h"
 
-void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-void processInput(GLFWwindow* window);
+#include "Base.h"
+#include "SceneManager.h"
 
-// settings
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+// Global Variables
+GLFWwindow* window=NULL;
 
+void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+{
+    // write the function here that you want to be called when your window is resized
+    
+    // make sure the viewport matches the new window dimensions; note that width and 
+    // height will be significantly larger than specified on retina displays.
+    //glViewport(0, 0, width, height);
+}
 
-int main() {
+bool start() {
     // glfw: initialize and configure
     // ------------------------------
     glfwInit();
@@ -25,18 +32,14 @@ int main() {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-#ifdef __APPLE__
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-#endif
-
     // glfw window creation
     // --------------------
-    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
+    window = glfwCreateWindow(1500, 900, "Physics Simulation", NULL, NULL);
     if (window == NULL)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
         glfwTerminate();
-        return -1;
+        return false;
     }
     glfwMakeContextCurrent(window);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
@@ -46,27 +49,43 @@ int main() {
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
         std::cout << "Failed to initialize GLAD" << std::endl;
-        return -1;
+        return false;
     }
+    return true;
+}
 
+void ImGuiInit() {
     //IMGUI
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
 
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
+    io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
+
     ImGui_ImplGlfw_InitForOpenGL(window, true);
-#ifdef __EMSCRIPTEN__
-    ImGui_ImplGlfw_InstallEmscriptenCallbacks(window, "#canvas");
-#endif
+
     ImGui_ImplOpenGL3_Init("#version 130");
+}
 
+int main() {
+    if (!start()) { std::cout << "Glwf is not glad" <<std::endl; }
 
+    ImGuiInit();
+    
+
+    SceneManager gSceneManager = *(SceneManager::get());
+    gSceneManager.NextScene = Base::get();
+    
     // render loop
     // -----------
     while (!glfwWindowShouldClose(window))
     {
         // input
         // -----
-        processInput(window);
+        //processInput(window);
 
         // render
         // ------
@@ -82,33 +101,25 @@ int main() {
 
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+        ImGuiIO& io = ImGui::GetIO(); (void)io;
 
+        if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+        {
+            GLFWwindow* backup_current_context = glfwGetCurrentContext();
+            ImGui::UpdatePlatformWindows();
+            ImGui::RenderPlatformWindowsDefault();
+            glfwMakeContextCurrent(backup_current_context);
+        }
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
         glfwSwapBuffers(window);
         glfwPollEvents();
+        gSceneManager.ChangeScene();
     }
 
     // glfw: terminate, clearing all previously allocated GLFW resources.
     // ------------------------------------------------------------------
     glfwTerminate();
     return 0;
-}
-
-// process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
-// ---------------------------------------------------------------------------------------------------------
-void processInput(GLFWwindow* window)
-{
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, true);
-}
-
-// glfw: whenever the window size changed (by OS or user resize) this callback function executes
-// ---------------------------------------------------------------------------------------------
-void framebuffer_size_callback(GLFWwindow* window, int width, int height)
-{
-    // make sure the viewport matches the new window dimensions; note that width and 
-    // height will be significantly larger than specified on retina displays.
-    glViewport(0, 0, width, height);
 }
