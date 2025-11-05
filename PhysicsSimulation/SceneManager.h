@@ -18,9 +18,8 @@ public:
 	~SceneManager() {
 		CurrentScene->Exit();
 		CurrentScene->~Scene();
-		delete(CurrentScene);
-		delete(NextScene);
 	};
+	Scene* CurrentScene = NULL;
 	Scene* NextScene = NULL;
 
 private:
@@ -28,7 +27,6 @@ private:
 		CurrentScene = Base::get();
 	};
 	static SceneManager gSceneManager;
-	Scene* CurrentScene = NULL;
 	
 
 };

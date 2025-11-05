@@ -9,6 +9,9 @@
 #include "ImGui\imgui_impl_glfw.h"
 #include "ImGui\imgui_impl_opengl3.h"
 
+#include <unordered_map>
+using namespace std;
+
 #include "Base.h"
 #include "SceneManager.h"
 
@@ -63,11 +66,15 @@ void ImGuiInit() {
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
-    io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
+   // io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
 
     ImGui_ImplGlfw_InitForOpenGL(window, true);
 
     ImGui_ImplOpenGL3_Init("#version 130");
+}
+
+void ImGuiUpdate() {
+
 }
 
 int main() {
@@ -78,6 +85,10 @@ int main() {
 
     SceneManager gSceneManager = *(SceneManager::get());
     gSceneManager.NextScene = Base::get();
+
+    float color[4] = { 0.45f, 0.55f, 0.60f, 1.00f };
+    bool showDemoWindow = false;
+    string selected = "";
     
     // render loop
     // -----------
@@ -89,32 +100,51 @@ int main() {
 
         // render
         // ------
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        glClearColor(color[0], color[1], color[2], 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-        // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
-        ImGui::ShowDemoWindow();
+        ImGui::Begin("Your Options");
+        
+        ImGui::ColorEdit3("clear color", color, ImGuiColorEditFlags_NoInputs); // Edit 3 floats representing a color
+
+        unordered_map<string, Scene* > NameAndScenePointer =
+        { {"Base",Base::get()}, {"Base1",Base::get()} ,{"Base2",Base::get()} };
+
+        for (auto it = NameAndScenePointer.begin(); it != NameAndScenePointer.end(); it++) {
+            
+            if (ImGui::Selectable(it->first.c_str(), selected == it->first, ImGuiSelectableFlags_AllowDoubleClick))
+                if (ImGui::IsMouseDoubleClicked(0)) {
+                    selected = it->first;
+                    gSceneManager.NextScene = it->second;
+                }
+        }
+
+
+       // ImGui::Text("Application average %.1f FPS (%.3f ms/frame) ", io.Framerate, 1000.0f / io.Framerate);
+        ImGui::Checkbox("Show Demo Window", &showDemoWindow);
+        if (showDemoWindow) {
+            ImGui::ShowDemoWindow(&showDemoWindow);
+        }
+
+        ImGui::End();
+
+        gSceneManager.CurrentScene->UpdateImGui();
 
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-        ImGuiIO& io = ImGui::GetIO(); (void)io;
+        
 
-        if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-        {
-            GLFWwindow* backup_current_context = glfwGetCurrentContext();
-            ImGui::UpdatePlatformWindows();
-            ImGui::RenderPlatformWindowsDefault();
-            glfwMakeContextCurrent(backup_current_context);
-        }
+        gSceneManager.CurrentScene->Update();
+        
+        gSceneManager.CurrentScene->Render();
 
-        // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
-        // -------------------------------------------------------------------------------
         glfwSwapBuffers(window);
         glfwPollEvents();
+
         gSceneManager.ChangeScene();
     }
 

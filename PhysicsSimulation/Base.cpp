@@ -8,9 +8,9 @@ void Base::Init() {
 }
 
 void Base::Update() {
-	printf("inti base");
+	//printf("Update base");
 }
 
 void Base::Render() {
-	printf("inti base");
+	//printf("Render base");
 }

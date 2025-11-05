@@ -45,9 +45,6 @@
     <ClCompile Include="main.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>Core\CPP</Filter>
-    </ClCompile>
     <ClCompile Include="Base.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>

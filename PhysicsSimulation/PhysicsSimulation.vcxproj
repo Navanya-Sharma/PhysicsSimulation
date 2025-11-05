@@ -142,7 +142,6 @@
     <ClCompile Include="IMGui\imgui_tables.cpp" />
     <ClCompile Include="IMGui\imgui_widgets.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Scene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base.h" />
