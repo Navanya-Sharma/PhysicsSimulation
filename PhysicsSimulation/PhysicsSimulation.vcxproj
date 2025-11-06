@@ -134,6 +134,7 @@
   <ItemGroup>
     <ClCompile Include="Base.cpp" />
     <ClCompile Include="glad.c" />
+    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="IMGui\imgui.cpp" />
     <ClCompile Include="IMGui\imgui_demo.cpp" />
     <ClCompile Include="IMGui\imgui_draw.cpp" />

@@ -48,6 +48,9 @@
     <ClCompile Include="Base.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Core\CPP</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IMGui\imconfig.h">

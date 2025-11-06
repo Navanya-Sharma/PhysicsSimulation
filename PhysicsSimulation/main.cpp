@@ -5,15 +5,15 @@
 /*#include "glm/glm.hpp"
 #include "stb_image.h"*/
 
-#include "ImGui\imgui.h"
-#include "ImGui\imgui_impl_glfw.h"
-#include "ImGui\imgui_impl_opengl3.h"
+
 
 #include <unordered_map>
 using namespace std;
 
+
 #include "Base.h"
 #include "SceneManager.h"
+//#include "ImGuiClass.h"
 
 // Global Variables
 GLFWwindow* window=NULL;
@@ -57,86 +57,24 @@ bool start() {
     return true;
 }
 
-void ImGuiInit() {
-    //IMGUI
-    IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
-
-    ImGuiIO& io = ImGui::GetIO(); (void)io;
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
-   // io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
-
-    ImGui_ImplGlfw_InitForOpenGL(window, true);
-
-    ImGui_ImplOpenGL3_Init("#version 130");
-}
-
-void ImGuiUpdate() {
-
-}
 
 int main() {
     if (!start()) { std::cout << "Glwf is not glad" <<std::endl; }
 
-    ImGuiInit();
-    
-
     SceneManager gSceneManager = *(SceneManager::get());
     gSceneManager.NextScene = Base::get();
 
-    float color[4] = { 0.45f, 0.55f, 0.60f, 1.00f };
-    bool showDemoWindow = false;
-    string selected = "";
-    
-    // render loop
-    // -----------
+    gSceneManager.ImGuiInit(window);
+
     while (!glfwWindowShouldClose(window))
     {
-        // input
-        // -----
-        //processInput(window);
-
-        // render
-        // ------
-        glClearColor(color[0], color[1], color[2], 1.0f);
+        
+        glClearColor(gSceneManager.color[0], gSceneManager.color[1], gSceneManager.color[2], 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
-
-        ImGui::Begin("Your Options");
-        
-        ImGui::ColorEdit3("clear color", color, ImGuiColorEditFlags_NoInputs); // Edit 3 floats representing a color
-
-        unordered_map<string, Scene* > NameAndScenePointer =
-        { {"Base",Base::get()}, {"Base1",Base::get()} ,{"Base2",Base::get()} };
-
-        for (auto it = NameAndScenePointer.begin(); it != NameAndScenePointer.end(); it++) {
-            
-            if (ImGui::Selectable(it->first.c_str(), selected == it->first, ImGuiSelectableFlags_AllowDoubleClick))
-                if (ImGui::IsMouseDoubleClicked(0)) {
-                    selected = it->first;
-                    gSceneManager.NextScene = it->second;
-                }
-        }
-
-
-       // ImGui::Text("Application average %.1f FPS (%.3f ms/frame) ", io.Framerate, 1000.0f / io.Framerate);
-        ImGui::Checkbox("Show Demo Window", &showDemoWindow);
-        if (showDemoWindow) {
-            ImGui::ShowDemoWindow(&showDemoWindow);
-        }
-
-        ImGui::End();
-
+        gSceneManager.CurrentScene->HandleEvents(window);
         gSceneManager.CurrentScene->UpdateImGui();
-
-        ImGui::Render();
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-        
+        gSceneManager.ImGuiUpdate();
 
         gSceneManager.CurrentScene->Update();
         
