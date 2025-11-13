@@ -39,7 +39,7 @@ void SceneManager::ImGuiUpdate()
         if (ImGui::Selectable(it->first.c_str(), selected == it->first, ImGuiSelectableFlags_AllowDoubleClick))
             if (ImGui::IsMouseDoubleClicked(0)) {
                 selected = it->first;
-                NextScene = it->second;
+                NextScene=move( it->second());
             }
     }
 

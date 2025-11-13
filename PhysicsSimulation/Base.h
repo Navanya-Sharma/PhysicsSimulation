@@ -4,15 +4,15 @@
 class Base : public Scene
 {
 public:
-	static Base* get() { return &gBase; }
+	
 
-	void Init();
-	void Update();
-	void Render();
+	void Init() override;
+	void Update() override;
+	void Render() override;
 
 
 private:
-	static Base gBase;
+	
 
 };
 

@@ -1,6 +1,6 @@
 #include "Base.h"
 
-Base Base::gBase;
+
 
 
 void Base::Init() {
