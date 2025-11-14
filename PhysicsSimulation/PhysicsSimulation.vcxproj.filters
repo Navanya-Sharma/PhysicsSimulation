@@ -13,9 +13,6 @@
     <Filter Include="Core\Header">
       <UniqueIdentifier>{4e9442db-3e30-4f5a-8e12-688879c22374}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\CPP">
-      <UniqueIdentifier>{0edb924a-603d-4276-a5c1-2167704c8d12}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="IMGui\imgui.cpp">
@@ -42,14 +39,14 @@
     <ClCompile Include="glad.c">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="Base.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
-      <Filter>Core\CPP</Filter>
+      <Filter>Core\Header</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Core\Header</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

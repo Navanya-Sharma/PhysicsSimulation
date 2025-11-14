@@ -25,6 +25,7 @@ public:
 
 	void ImGuiInit(GLFWwindow* window);
 	void ImGuiUpdate();
+	void ImGuiRender();
 
 	std::unique_ptr<Scene> CurrentScene = NULL;
 	std::unique_ptr<Scene> NextScene = NULL;
@@ -44,6 +45,11 @@ private:
 		{"Base1", []() { return make_unique<Base>(); }},
 		{"Base2", []() { return make_unique<Base>(); }}
 	};
+	/*unordered_map<string, function<Scene* ()>> NameAndScenePointer2 = {
+	{"Base",  []() -> Scene* { return new Base(); }},
+	{"Base1", []() -> Scene* { return new Base(); }},
+	{"Base2", []() -> Scene* { return new Base(); }}
+	};*/
 	
 	//Function Pointers
 };

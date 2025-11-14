@@ -47,6 +47,8 @@ bool start() {
     glfwMakeContextCurrent(window);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
+    //V Synced
+    glfwSwapInterval(1);
     // glad: load all OpenGL function pointers
     // ---------------------------------------
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -74,12 +76,15 @@ int main() {
         glClear(GL_COLOR_BUFFER_BIT);
 
         gSceneManager->CurrentScene->HandleEvents(window);
-        gSceneManager->CurrentScene->UpdateImGui();
+
         gSceneManager->ImGuiUpdate();
+        gSceneManager->CurrentScene->UpdateImGui();
 
         gSceneManager->CurrentScene->Update();
         
         gSceneManager->CurrentScene->Render();
+
+        gSceneManager->ImGuiRender();
 
         glfwSwapBuffers(window);
         glfwPollEvents();

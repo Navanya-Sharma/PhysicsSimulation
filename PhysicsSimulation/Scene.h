@@ -18,5 +18,7 @@ public:
 	};
 
 	virtual ~Scene() = default;
+private:
+	
 };
 
