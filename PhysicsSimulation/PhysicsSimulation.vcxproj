@@ -133,6 +133,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Base.cpp" />
+    <ClCompile Include="Basic Box.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="IMGui\imgui.cpp" />
@@ -146,6 +147,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base.h" />
+    <ClInclude Include="Basic Box.h" />
     <ClInclude Include="IMGui\imconfig.h" />
     <ClInclude Include="IMGui\imgui.h" />
     <ClInclude Include="IMGui\imgui_impl_glfw.h" />

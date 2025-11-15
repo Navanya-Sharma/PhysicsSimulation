@@ -48,6 +48,9 @@
     <ClCompile Include="main.cpp">
       <Filter>Core\Header</Filter>
     </ClCompile>
+    <ClCompile Include="Basic Box.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IMGui\imconfig.h">
@@ -85,6 +88,9 @@
     </ClInclude>
     <ClInclude Include="SceneManager.h">
       <Filter>Core\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Box.h">
+      <Filter>Scenes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -15,10 +15,11 @@ void Base::Update() {
 }
 
 void Base::UpdateImGui() {
-	//ImGui::NewFrame();
-	ImGui::Begin("Hey");
-	ImGui::Text("Hello, ImGui!");
-	ImGui::End();
+	
+
+	//Scene::UpdateImGui();
+	//ImGui::Text("Hello, ImGui!");
+	//ImGui::End();
 	
 }
 

@@ -37,14 +37,10 @@ private:
 		CurrentScene = std::make_unique<Base>();
 	};
 	static SceneManager gSceneManager;
+	static unordered_map<string, function<unique_ptr<Scene>()>> NameAndScenePointer;
 
 	bool showDemoWindow = false;
 	std::string selected = "";
-	unordered_map<string, function<unique_ptr<Scene>()>> NameAndScenePointer = {
-		{"Base",  []() { return make_unique<Base>(); }},
-		{"Base1", []() { return make_unique<Base>(); }},
-		{"Base2", []() { return make_unique<Base>(); }}
-	};
 	/*unordered_map<string, function<Scene* ()>> NameAndScenePointer2 = {
 	{"Base",  []() -> Scene* { return new Base(); }},
 	{"Base1", []() -> Scene* { return new Base(); }},

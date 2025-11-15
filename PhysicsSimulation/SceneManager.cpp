@@ -4,8 +4,16 @@
 #include "ImGui\imgui_impl_glfw.h"
 #include "ImGui\imgui_impl_opengl3.h"
 
+#include "Basic Box.h"
+
 
 SceneManager SceneManager::gSceneManager;
+
+unordered_map<string, function<unique_ptr<Scene>()>> SceneManager::NameAndScenePointer = {
+        {"1) Base",  []() { return make_unique<Base>(); }},
+        {"2) Basic Box", []() { return make_unique<BasicBox>(); }},
+        {"3) Base2", []() { return make_unique<Base>(); }}
+};
 
 void SceneManager::ImGuiInit(GLFWwindow* window) {
     //IMGUI

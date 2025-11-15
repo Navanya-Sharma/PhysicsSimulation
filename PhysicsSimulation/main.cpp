@@ -59,7 +59,6 @@ bool start() {
     return true;
 }
 
-
 int main() {
     if (!start()) { std::cout << "Glwf is not glad" <<std::endl; }
 
